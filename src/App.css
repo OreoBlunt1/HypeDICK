@@ -97,6 +97,7 @@ hr {
 }
 
 .nav a {
+    color: black;
     margin-right: 110px;
     font-family: 'Montserrat';
     font-style: normal;
