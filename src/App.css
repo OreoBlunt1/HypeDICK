@@ -496,6 +496,9 @@ hr {
     position: relative;
 }
 
+.stage.sixth h2 {
+    margin-bottom: 62px;
+}
 
 .stage.sixth::before {
     content: "";
