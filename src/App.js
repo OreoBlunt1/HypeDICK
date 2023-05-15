@@ -10,13 +10,28 @@ import solaris from './img/solaris.svg';
 import dot from './img/dot.svg';
 import activeDot from './img/active-dot.svg';
 import Slider from 'react-slick';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
 	const [isFirstAccordion, setIsFirstAccordion] = useState(false);
 	const [isSecondAccordion, setIsSecondAccordion] = useState(false);
 	const [isThirdAccordion, setIsThirdAccordion] = useState(false);
 	const [isFourthAccordion, setIsFourthAccordion] = useState(false);
+
+	const [price, setPrice] = useState(null);
+	const [formControls, setFormControls] = useState({
+		name: {
+			value: '',
+		},
+		phone: {
+			value: '',
+			isValid: false,
+		},
+	});
+
+	console.log(formControls.name.value);
+
 	const sliderSettings = {
 		slidesToShow: 1,
 		dots: true,
@@ -78,6 +93,49 @@ function App() {
 	function onFourthAccordionClick() {
 		setIsFourthAccordion((prev) => !prev);
 	}
+
+	function phoneValidation() {
+		return /^(?:\+7|8)\d{10}$/.test(formControls.phone.value);
+	}
+
+	function throwLead() {
+		if (phoneValidation()) {
+			const leadData = {
+				name: formControls.name.value,
+				phone_number: formControls.phone.value,
+			};
+			axios.post('http://149.102.143.18:5000/lead', leadData);
+		} else {
+			console.log('Иди нахуй');
+		}
+	}
+
+	function onNameChangeHandler(event) {
+		const newFormControls = { ...formControls };
+		newFormControls.name.value = event.target.value;
+		setFormControls(newFormControls);
+	}
+
+	function onPhoneChangeHandler(event) {
+		const newFormControls = { ...formControls };
+		newFormControls.phone.value = event.target.value;
+		setFormControls(newFormControls);
+	}
+
+	useEffect(() => {
+		axios.get('http://149.102.143.18:5000/prices').then((res) => {
+			const resData = res.data;
+			const newPrice = resData.map((item, index) => {
+				return {
+					pos: item.pos,
+					redemption: item.redemption,
+					rent: item.rent,
+				};
+			});
+
+			setPrice(newPrice);
+		});
+	}, []);
 
 	return (
 		<div className='wrapper'>
@@ -170,9 +228,19 @@ function App() {
 									<br />
 									инвестором
 								</h1>
-								<input placeholder='Имя' />
-								<input placeholder='+7 (999) 999 99 99' />
-								<button>Отправить заявку</button>
+								<input
+									onChange={(event) => {
+										onNameChangeHandler(event);
+									}}
+									placeholder='Имя'
+								/>
+								<input
+									onChange={(event) => {
+										onPhoneChangeHandler(event);
+									}}
+									placeholder='+7 (999) 999 99 99'
+								/>
+								<button onClick={throwLead}>Отправить заявку</button>
 								<span>
 									Нажимая на кнопку, вы принимаете&nbsp;
 									<a href='https://yandex.ru/'>
@@ -213,24 +281,24 @@ function App() {
 					<div className='price'>
 						<div className='priceRow autoAmount'>
 							<h2></h2>
-							<span>1 Авто</span>
-							<span>5 Авто</span>
-							<span>10 Авто</span>
+							<span>{price ? price[0].pos : null}</span>
+							<span>{price ? price[1].pos : null}</span>
+							<span>{price ? price[2].pos : null}</span>
 						</div>
 						<div className='priceRow rent'>
 							<h2>Аренда</h2>
 							<div className='priceBlock'>
-								<span>36 000 ₽/мес</span>
-								<span>180 000 ₽/мес</span>
-								<span>360 000 ₽/мес</span>
+								<span>{price ? price[0].rent : null} ₽/мес</span>
+								<span>{price ? price[1].rent : null} ₽/мес</span>
+								<span>{price ? price[2].rent : null} ₽/мес</span>
 							</div>
 						</div>
 						<div className='priceRow buy'>
 							<h2>Выкуп</h2>
 							<div className='priceBlock'>
-								<span>36 000 ₽/мес</span>
-								<span>180 000 ₽/мес</span>
-								<span>360 000 ₽/мес</span>
+								<span>{price ? price[0].redemption : null} ₽/мес</span>
+								<span>{price ? price[1].redemption : null} ₽/мес</span>
+								<span>{price ? price[2].redemption : null} ₽/мес</span>
 							</div>
 						</div>
 					</div>
