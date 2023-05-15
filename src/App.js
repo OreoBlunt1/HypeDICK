@@ -105,8 +105,8 @@ function App() {
 				phone_number: formControls.phone.value,
 			};
 			axios.post('http://149.102.143.18:5000/lead', leadData);
+			alert('Заявка успешно отправлена!');
 		} else {
-			console.log('Иди нахуй');
 		}
 	}
 
