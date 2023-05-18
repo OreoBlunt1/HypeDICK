@@ -989,21 +989,23 @@ hr {
         margin-bottom: 20px;
     }
 
+    .stage br {
+        display: none;
+    }
+
     .stage span {
         margin: 0;
+        font-size: 15px;
+        text-align: center;
+        line-height: normal;
     }
 
     .stage h2 {
         margin: 0;
+        text-align: center;
         margin-top: 10px;
         margin-bottom: 10px;
         font-size: 25px;
-        text-align: center;
-    }
-
-    .stage span {
-        font-size: 15px;
-        text-align: center;
     }
 
     .circle {
@@ -1341,6 +1343,22 @@ hr {
 
 .footerDown .logo {
     margin-right: 103px;
+}
+
+@media screen and (min-width: 375px) and (max-width: 1000px) {
+    .footerDown {
+        display: flex;
+    }
+
+    .footerDown a {
+        margin: 0;
+        margin-right: 10px;
+        font-size: 10px;
+    }
+
+    .footerDown .logo {
+        margin-right: 10px;
+    }
 }
 
 .slick-slider {
