@@ -346,19 +346,20 @@ hr {
 
 .card {
     box-sizing: border-box;
-    height: 461px;
     max-width: 416px;
     width: 100%;
     margin-top: 86px;
     margin-left: 75px;
     padding-left: 39px;
     padding-right: 40px;
+    padding-bottom: 24px;
+    padding-top: 24px;
     border-radius: 15px;
     background-color: #F5F4F2;
 }
 
 .card h1 {
-    margin-top: 24px;
+    margin-top: 0px;
     margin-bottom: 10px;
     font-family: 'Montserrat';
     font-style: normal;

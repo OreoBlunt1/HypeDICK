@@ -101,16 +101,39 @@ function App() {
 	}
 
 	function nameValidation() {
-		return formControls.name.value !== '';
+		return (
+			formControls.name.value !== '' && formControls.name.value.length <= 60
+		);
 	}
 
-	function throwLead() {
+	async function throwLead() {
 		if (phoneValidation() && nameValidation()) {
 			const leadData = {
 				name: formControls.name.value,
 				phone_number: formControls.phone.value,
 			};
-			axios.post('http://149.102.143.18:5000/lead', leadData);
+			fetch('http://149.102.143.18:5000/lead', {
+				method: 'POST',
+				mode: 'cors',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(leadData),
+			})
+				.then((response) => {
+					if (response.ok) {
+						return response.json();
+					}
+					throw new Error('Error: ' + response.status);
+				})
+				.then((data) => {
+					// Handle the response data
+					console.log(data);
+				})
+				.catch((error) => {
+					// Handle any errors that occurred during the request
+					console.log('Error:', error.message);
+				});
 			alert('Заявка успешно отправлена! Ожидайте чего-то там');
 			setIsFormValid(true);
 			setIsReplyMe(false);
@@ -283,8 +306,15 @@ function App() {
 									{!isFormValid && !phoneValidation() ? (
 										<p>*Проверьте правильность номера телефона</p>
 									) : null}
-									{!isFormValid && !nameValidation() ? (
+									{!isFormValid &&
+									!nameValidation() &&
+									formControls.name.value === '' ? (
 										<p>*Имя не должно быть пустым</p>
+									) : null}
+									{!isFormValid &&
+									!nameValidation() &&
+									formControls.name.value.length > 60 ? (
+										<p>*Длина имени не должна превышать 60 символов</p>
 									) : null}
 									<button onClick={throwLead}>Отправить заявку</button>
 									<span className='noneDisplayMobile'>
