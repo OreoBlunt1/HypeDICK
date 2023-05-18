@@ -106,10 +106,8 @@ export default function MyAlert({ onClose }) {
 					</a>
 				</span>
 				<span className='noneDisplayDesktop'>
-					Нажимая на кнопку, вы принимаете&nbsp;
-					<a href='https://yandex.ru/'>
-						условия передачи информации и пользовательское соглашение
-					</a>
+					Нажимая на кнопку, вы принимаете&nbsp; условия передачи информации и
+					пользовательское соглашение
 				</span>
 			</div>
 			<Backdrop onClick={onClose} />

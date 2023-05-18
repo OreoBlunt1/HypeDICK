@@ -14,7 +14,9 @@ body {
 }
 
 .last {
+    margin: 0;
     margin-right: 0;
+    margin-bottom: 0;
 }
 
 hr {
@@ -74,7 +76,7 @@ hr {
     }
 
     .header {
-        height: 50px;
+        height: 100px;
     }
 
     .leftHead {
@@ -84,19 +86,19 @@ hr {
 
     .logo {
         margin: 0;
-        margin-right: 5px;
-        font-size: 16px;
+        font-size: 20px;
     }
 
     .leftHead p {
+        display: none;
         margin: 0;
-        font-size: 6px;
-        line-height: 8px;
+        font-size: 8px;
+        line-height: normal;
     }
 
     .r {
-        font-size: 6px;
-        margin-left: 1px;
+        font-size: 10px;
+        margin-left: 3px;
     }
 
 
@@ -141,14 +143,14 @@ hr {
     .rightHead span {
         margin: 0;
         margin-right: 10px;
-        font-size: 8px;
+        font-size: 12px;
     }
 
     .rightHead button {
         padding: 4px 15px 4.5px 15px;
         margin: 0;
-        font-size: 5px;
-        line-height: 5px;
+        font-size: 12px;
+        line-height: normal;
         color: inherit;
         /* Используем цвет текста наследуемый от родительского элемента */
         text-decoration: none;
@@ -163,13 +165,13 @@ hr {
 }
 
 .nav a {
+    margin-right: 105px;
     color: black;
-    margin-right: 110px;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
-    line-height: 17px;
+    line-height: normal;
     text-align: center;
     text-decoration: none;
 }
@@ -181,14 +183,14 @@ hr {
 
 @media screen and (min-width: 375px) and (max-width: 1000px) {
     .nav {
-        height: 50px;
-        justify-content: center;
+        height: 80px;
+        justify-content: space-between;
     }
 
     .nav a {
+        margin: 0;
         white-space: nowrap;
-        margin: 40px;
-        font-size: 9px;
+        font-size: 14px;
         line-height: normal;
     }
 }
@@ -250,7 +252,8 @@ hr {
     .invest {
         flex-direction: column;
         align-items: center;
-        height: 700px;
+        height: 830px;
+
     }
 
     .investWrapper .container {
@@ -260,7 +263,7 @@ hr {
 
     .leftBack {
         width: 100%;
-        height: 700px;
+        height: 830px;
     }
 
     .rightBack {
@@ -275,7 +278,7 @@ hr {
         text-align: center;
         margin: 0;
         margin-top: 20px;
-        font-size: 21px;
+        font-size: 23px;
         line-height: 28px;
     }
 
@@ -435,40 +438,42 @@ hr {
     .card {
         margin: 0;
         margin-top: 40px;
+        margin-bottom: 100px;
         max-width: 350px;
         padding: 0;
         padding: 20px;
         box-sizing: border-box;
-        height: 100%;
     }
 
     .card h1 {
         margin: 0;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
         line-height: 21px;
-        font-size: 18px;
+        font-size: 25px;
     }
 
     .card input {
         margin: 0;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         padding: 0;
-        padding: 8px;
-        font-size: 8px;
+        padding: 15px;
+        font-size: 16px;
     }
 
     .card button {
         margin: 0;
-        margin-bottom: 5px;
+        margin-bottom: 20px;
         padding: 0;
-        padding: 8px;
-        font-size: 10px;
+        padding: 15px;
+        font-size: 16px;
     }
+
+
 
     .card span {
         margin: 0;
-        font-size: 8px;
-        line-height: 8px;
+        font-size: 13px;
+        line-height: 15px;
     }
 
     .card p {
@@ -1153,7 +1158,7 @@ hr {
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
-    line-height: 17px;
+    line-height: normal;
 }
 
 @media screen and (min-width: 375px) and (max-width: 1000px) {
@@ -1172,10 +1177,10 @@ hr {
 .mapWrapper {
     display: flex;
     justify-content: center;
-    width: 100%;
-    height: 834px;
-
+    align-items: center;
+    background-color: black;
 }
+
 
 .footerWrapper {
     background: #B2B2B2;
@@ -1224,6 +1229,7 @@ hr {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
+    color: black;
     font-size: 40px;
 }
 
@@ -1421,14 +1427,27 @@ hr {
     box-sizing: border-box;
     z-index: 90;
     transform: translateY(-50%) translateX(-50%);
-    height: 461px;
 }
 
-@media screen and (min-width: 375px) and (max-width: 1000px) {
-    .MyAlert {
-        height: 250px;
-    }
+.panel {
+    display: flex;
+    flex-direction: column;
+    padding-right: 20px;
 }
+
+.panel h2 {
+    margin: 0;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.panel p {
+    margin: 0;
+    margin-top: 30px;
+    line-height: 20px;
+}
+
+@media screen and (min-width: 375px) and (max-width: 1000px) {}
 
 .noneDisplayDesktop {
     display: none;
