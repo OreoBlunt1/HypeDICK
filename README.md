@@ -1,3 +1,30 @@
+# Backend build:
+### Build tgbot
+```.sh
+cd backend/telegramBot/
+docker build --tag hypetaxi_tgbot .
+```
+### Run tgbot docker
+```.sh
+docker run hypetaxi_tgbot
+```
+
+### Build server
+```.sh
+cd backend/server/
+docker build --tag hypetaxi_server .
+```
+### Run tgbot docker
+```.sh
+docker run -p 5000:5000 hypetaxi_server
+```
+### Init database tables
+```.sh
+curl http://<server_ip>:5000/init
+```
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
