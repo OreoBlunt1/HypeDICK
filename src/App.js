@@ -101,7 +101,7 @@ function App() {
 	}
 
 	function nameValidation() {
-		return formControls.name.value != '';
+		return formControls.name.value !== '';
 	}
 
 	function throwLead() {

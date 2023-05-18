@@ -19,7 +19,7 @@ export default function MyAlert({ onClose }) {
 	}
 
 	function nameValidation() {
-		return formControls.name.value != '';
+		return formControls.name.value !== '';
 	}
 
 	function throwLead() {
