@@ -1415,11 +1415,12 @@ hr {
 
 .MyAlert {
     position: fixed;
-    box-sizing: border-box;
+    margin: 0;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    box-sizing: border-box;
     z-index: 90;
+    transform: translateY(-50%) translateX(-50%);
     height: 461px;
 }
 

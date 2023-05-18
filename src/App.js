@@ -23,6 +23,8 @@ function App() {
 
 	const [isReplyMe, setIsReplyMe] = useState(false);
 
+	const IP = process.env.REACT_APP_IP_ADDRESS;
+
 	const [price, setPrice] = useState(null);
 	const [isFormValid, setIsFormValid] = useState(true);
 	const [formControls, setFormControls] = useState({
@@ -108,11 +110,12 @@ function App() {
 
 	async function throwLead() {
 		if (phoneValidation() && nameValidation()) {
+			console.log('work');
 			const leadData = {
 				name: formControls.name.value,
 				phone_number: formControls.phone.value,
 			};
-			fetch('http://149.102.143.18:5000/lead', {
+			fetch(`${IP}/lead`, {
 				method: 'POST',
 				mode: 'cors',
 				headers: {
@@ -122,18 +125,18 @@ function App() {
 			})
 				.then((response) => {
 					if (response.ok) {
-						return response.json();
+						console.log(response.json());
+						return response;
 					}
 					throw new Error('Error: ' + response.status);
 				})
 				.then((data) => {
-					// Handle the response data
 					console.log(data);
 				})
 				.catch((error) => {
-					// Handle any errors that occurred during the request
 					console.log('Error:', error.message);
 				});
+
 			alert('Заявка успешно отправлена! Ожидайте чего-то там');
 			setIsFormValid(true);
 			setIsReplyMe(false);
@@ -170,6 +173,12 @@ function App() {
 		}
 	}
 
+	function onEscPressedHandler(event) {
+		if (event.keyCode === 27) {
+			onReplyClose();
+		}
+	}
+
 	function onReplyMeClick() {
 		setIsReplyMe(true);
 	}
@@ -179,18 +188,37 @@ function App() {
 	}
 
 	useEffect(() => {
-		axios.get('http://149.102.143.18:5000/prices').then((res) => {
-			const resData = res.data;
-			const newPrice = resData.map((item, index) => {
-				return {
-					pos: item.pos,
-					redemption: item.redemption,
-					rent: item.rent,
-				};
-			});
+		document.addEventListener('keydown', onEscPressedHandler);
 
-			setPrice(newPrice);
-		});
+		return () => {
+			document.removeEventListener('keydown', onEscPressedHandler);
+		};
+	}, []);
+
+	useEffect(() => {
+		fetch(`${IP}/prices`, {
+			method: 'GET',
+			mode: 'cors',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((res) => {
+				const resData = res.json().then((data) => {
+					const newPrice = data.map((item, index) => {
+						return {
+							pos: item.pos,
+							redemption: item.redemption,
+							rent: item.rent,
+						};
+					});
+
+					setPrice(newPrice);
+				});
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 	}, []);
 
 	return (
@@ -224,7 +252,7 @@ function App() {
 							<br />
 							для водителей
 						</a>
-						<a class='last' href='#footer'>
+						<a className='last' href='#footer'>
 							Контакты
 						</a>
 					</div>
