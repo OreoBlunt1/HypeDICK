@@ -25,6 +25,8 @@ function App() {
 
 	const IP = process.env.REACT_APP_IP_ADDRESS;
 
+	console.log(IP);
+
 	const [price, setPrice] = useState(null);
 	const [isFormValid, setIsFormValid] = useState(true);
 	const [formControls, setFormControls] = useState({
