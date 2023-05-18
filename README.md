@@ -18,6 +18,10 @@ docker build --tag hypetaxi_server .
 ```.sh
 docker run -p 5000:5000 hypetaxi_server
 ```
+### Init database tables
+```.sh
+curl http://<server_ip>:5000/init
+```
 
 
 
