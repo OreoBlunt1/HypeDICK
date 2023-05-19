@@ -14,6 +14,8 @@ export default function MyAlert({ onClose }) {
 		},
 	});
 
+	const IP = process.env.REACT_APP_IP_ADDRESS;
+
 	function phoneValidation() {
 		return /^(?:\+7|8)\d{10}$/.test(formControls.phone.value);
 	}
@@ -28,7 +30,7 @@ export default function MyAlert({ onClose }) {
 				name: formControls.name.value,
 				phone_number: formControls.phone.value,
 			};
-			axios.post('http://149.102.143.18:5000/lead', leadData);
+			axios.post(`${IP}/lead`, leadData);
 			alert('Заявка успешно отправлена! Ожидайте чего-то там');
 			setIsFormValid(true);
 		} else {
