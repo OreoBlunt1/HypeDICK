@@ -196,31 +196,30 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		fetch(`${IP}/prices`, {
-			method: 'GET',
-			mode: 'cors',
-			headers: {
-				'Access-Control-Allow-Origin': '*',
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		})
-			.then((res) => {
-				const resData = res.json().then((data) => {
-					const newPrice = data.map((item, index) => {
-						return {
-							pos: item.pos,
-							redemption: item.redemption,
-							rent: item.rent,
-						};
-					});
-
-					setPrice(newPrice);
+		async function fetchData() {
+			try {
+				const response = await axios.get(`${IP}/prices`, {
+					headers: {
+						'Access-Control-Allow-Origin': '*',
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+					},
 				});
-			})
-			.catch((e) => {
+				const newPrices = response.data.map((price) => {
+					return {
+						pos: price.pos,
+						redemption: price.redemption,
+						rent: price.rent,
+					};
+				});
+				setPrice(newPrices);
+				console.log(response.data);
+			} catch (e) {
 				console.log(e);
-			});
+			}
+		}
+
+		fetchData();
 	}, []);
 
 	return (
