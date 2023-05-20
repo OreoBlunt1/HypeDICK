@@ -511,7 +511,6 @@ hr {
 .price {
     display: flex;
     justify-content: flex-start;
-    margin-top: 135px;
 }
 
 .priceRow {
@@ -1370,10 +1369,13 @@ hr {
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 47.3%;
+    overflow: hidden;
 }
 
 .slick-track {
     display: flex;
+    width: fit-content;
 }
 
 .carousel .slick-slide.slick-active {
@@ -1389,13 +1391,18 @@ hr {
 .carouselItem[style] {
     outline: none !important;
     display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     margin: auto;
     padding-top: 100px;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .carouselItem p {
+    position: absolute;
+    top: 100%;
     margin-left: -30px;
     width: 100%;
     text-align: center;
@@ -1415,6 +1422,8 @@ hr {
     max-height: 324px;
     height: 100%;
     z-index: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .slick-list {
@@ -1455,6 +1464,10 @@ hr {
         margin-top: 100px;
     }
 
+    .slick-list {
+        display: flex;
+        height: 430px;
+    }
 
     .income h1 {
         margin-bottom: 50px;
@@ -1485,7 +1498,6 @@ hr {
         height: 18px;
     }
 
-    .price {}
 }
 
 .MyAlert {
@@ -1531,6 +1543,19 @@ hr {
         width: 85%;
     }
 
+    .slick-slider {
+        height: 70%;
+        margin-bottom: ;
+    }
+
+    .slick-track {
+        height: 43%;
+    }
+
+    .slick-list {
+        z-index: 0;
+    }
+
     .priceRow {
         display: flex;
         flex-direction: row;
@@ -1546,8 +1571,13 @@ hr {
         height: 1000px;
     }
 
+    .carouselItem {
+        z-index: 1;
+    }
+
     .carouselItem p {
         font-size: 30px;
+        margin: 0;
     }
 
     .priceBlock {
@@ -1564,6 +1594,10 @@ hr {
 @media screen and (min-width: 1000px) and (max-width: 1209px) {
     .income {
         height: 1050px;
+    }
+
+    .slick-slider {
+        height: 80%;
     }
 
     .carouselItem p {
@@ -1584,6 +1618,10 @@ hr {
 @media screen and (min-width: 1209px) and (max-width: 1325px) {
     .income {
         height: 1100px;
+    }
+
+    .slick-slider {
+        height: 60%;
     }
 
     .carouselItem p {
