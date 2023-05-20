@@ -11,12 +11,11 @@ docker run hypetaxi_tgbot
 
 ### Build server
 ```.sh
-cd backend/server/
-docker build --tag hypetaxi_server .
+docker-compose -f docker-compose.yml build
 ```
-### Run tgbot docker
+### Run server docker
 ```.sh
-docker run -p 5000:5000 hypetaxi_server
+docker-compose -f docker-compose.yml up -d
 ```
 ### Init database tables
 ```.sh
