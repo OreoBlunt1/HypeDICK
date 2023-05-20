@@ -1,5 +1,5 @@
 import './App.css';
-import rectangle from './img/rectangle.svg';
+import plus from './img/plus.svg';
 import car from './img/car.svg';
 import arrow from './img/arrow.svg';
 import max from './img/max.svg';
@@ -39,6 +39,9 @@ function App() {
 	const sliderSettings = {
 		slidesToShow: 1,
 		dots: true,
+		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 4000,
 		customPaging: function (slider, i) {
 			// Return your custom dot HTML here
 			return (
@@ -139,7 +142,7 @@ function App() {
 					console.log('Error:', error.message);
 				});
 
-			alert('Заявка успешно отправлена! Ожидайте чего-то там');
+			alert('Ваша заявка успешно отправлена!');
 			setIsFormValid(true);
 			setIsReplyMe(false);
 		} else {
@@ -197,6 +200,25 @@ function App() {
 		};
 	}, []);
 
+	function formatPrice(number) {
+		let numberString = number.toString().replace(' ', '');
+
+		console.log('raw ' + numberString);
+		let formattedNumber = '';
+		let count = 0;
+
+		for (let i = numberString.length - 1; i >= 0; i--) {
+			formattedNumber = numberString[i] + formattedNumber;
+			count++;
+
+			if (count % 3 === 0 && i !== 0) {
+				formattedNumber = ' ' + formattedNumber;
+			}
+		}
+
+		return formattedNumber;
+	}
+
 	useEffect(() => {
 		async function fetchData() {
 			try {
@@ -210,8 +232,8 @@ function App() {
 				const newPrices = response.data.map((price) => {
 					return {
 						pos: price.pos,
-						redemption: price.redemption,
-						rent: price.rent,
+						redemption: formatPrice(price.redemption),
+						rent: formatPrice(price.rent),
 					};
 				});
 				setPrice(newPrices);
@@ -278,7 +300,7 @@ function App() {
 									<h2>Инвестиции в такси</h2>
 									<div className='advantagesList'>
 										<div className='advantage'>
-											<img src={rectangle} alt='rectangle' />
+											<img src={plus} alt='plus' />
 											<span>
 												Официально
 												<br />
@@ -286,7 +308,7 @@ function App() {
 											</span>
 										</div>
 										<div className='advantage'>
-											<img src={rectangle} alt='rectangle' />
+											<img src={plus} alt='plus' />
 											<span>
 												Заработок с одного
 												<br />
@@ -294,7 +316,7 @@ function App() {
 											</span>
 										</div>
 										<div className='advantage'>
-											<img src={rectangle} alt='rectangle' />
+											<img src={plus} alt='plus' />
 											<span>
 												Ежемесячные
 												<br />
@@ -302,11 +324,11 @@ function App() {
 											</span>
 										</div>
 										<div className='advantage'>
-											<img src={rectangle} alt='rectangle' />
+											<img src={plus} alt='plus' />
 											<span>Пассивный доход</span>
 										</div>
 										<div className='advantage'>
-											<img src={rectangle} alt='rectangle' />
+											<img src={plus} alt='plus' />
 											<span>
 												Подбор, запуск и<br />
 												обслуживание автомобилей
@@ -413,7 +435,7 @@ function App() {
 										<span>{price ? price[1].pos : null}</span>
 										<span>{price ? price[2].pos : null}</span>
 									</div>
-									<div className='priceBlock'>
+									<div className='priceBlock last'>
 										<span>{price ? price[0].rent : null} ₽/мес</span>
 										<span>{price ? price[1].rent : null} ₽/мес</span>
 										<span>{price ? price[2].rent : null} ₽/мес</span>
@@ -700,19 +722,6 @@ function App() {
 								onKeyDown={onEnterPressedHandler}
 								placeholder='+7 (999) 999-99-99'
 							/>
-							{!isFormValid && !phoneValidation() ? (
-								<p>*Проверьте правильность номера телефона</p>
-							) : null}
-							{!isFormValid &&
-							!nameValidation() &&
-							formControls.name.value === '' ? (
-								<p>*Имя не должно быть пустым</p>
-							) : null}
-							{!isFormValid &&
-							!nameValidation() &&
-							formControls.name.value.length > 60 ? (
-								<p>*Длина имени не должна превышать 60 символов</p>
-							) : null}
 							<button onClick={throwLead}>Начать зарабатывать с такси</button>
 						</div>
 					</div>

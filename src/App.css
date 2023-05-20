@@ -494,7 +494,6 @@ hr {
     flex-direction: column;
     height: 1311px;
     width: 100%;
-    overflow: hidden;
 }
 
 .income h1 {
@@ -513,7 +512,6 @@ hr {
     display: flex;
     justify-content: flex-start;
     margin-top: 135px;
-    padding-left: 89px;
 }
 
 .priceRow {
@@ -546,6 +544,8 @@ hr {
 }
 
 .priceRow span {
+    margin-right: 59px;
+    margin-left: 59px;
     margin-bottom: 60px;
 }
 
@@ -554,7 +554,7 @@ hr {
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    width: 363px;
+    max-width: 363px;
     padding-top: 57px;
     border: 0.5px solid #888888;
     border-radius: 10px;
@@ -563,13 +563,15 @@ hr {
 
 .autoAmount {
     padding-top: 63px;
-    margin-right: 100px;
+    margin-right: 45px;
 }
+
+
 
 @media screen and (min-width: 375px) and (max-width: 1000px) {
     .income {
         align-items: center;
-        height: 1350px;
+        height: 1000px;
     }
 
     .income h1 {
@@ -1190,7 +1192,7 @@ hr {
 
 .footerUp {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     padding-top: 91px;
     padding-bottom: 63px;
     width: 100%;
@@ -1270,9 +1272,10 @@ hr {
 .footerDown {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 85%;
     padding-top: 51px;
     padding-bottom: 51px;
-    background-color: white;
 }
 
 .timetable span {
@@ -1333,7 +1336,6 @@ hr {
 }
 
 .footerDown a {
-    margin-right: 94px;
     text-decoration: underline;
     font-family: 'Montserrat';
     font-style: normal;
@@ -1341,23 +1343,26 @@ hr {
     font-size: 15px;
 }
 
-.footerDown .logo {
-    margin-right: 103px;
-}
 
 @media screen and (min-width: 375px) and (max-width: 1000px) {
     .footerDown {
         display: flex;
+        flex-direction: column;
+        padding: 0;
+        padding-top: 30px;
+        padding-bottom: 20px;
+        align-items: start;
     }
 
     .footerDown a {
         margin: 0;
-        margin-right: 10px;
-        font-size: 10px;
+        margin-bottom: 10px;
+        font-size: 16px;
     }
 
     .footerDown .logo {
-        margin-right: 10px;
+        margin-bottom: 20px;
+        font-size: 30px;
     }
 }
 
@@ -1382,6 +1387,7 @@ hr {
 }
 
 .carouselItem[style] {
+    outline: none !important;
     display: flex !important;
     margin: auto;
     padding-top: 100px;
@@ -1390,6 +1396,7 @@ hr {
 }
 
 .carouselItem p {
+    margin-left: -30px;
     width: 100%;
     text-align: center;
     margin-top: 92px;
@@ -1401,6 +1408,12 @@ hr {
 }
 
 .carouselItem img {
+    outline: none;
+    margin-bottom: 35px;
+    max-width: 751px;
+    width: 100%;
+    max-height: 324px;
+    height: 100%;
     z-index: 0;
 }
 
@@ -1435,6 +1448,44 @@ hr {
 
 .slick-dots li.slick-active img:nth-child(2) {
     display: block;
+}
+
+@media screen and (min-width: 375px) and (max-width: 1000px) {
+    .price {
+        margin-top: 100px;
+    }
+
+
+    .income h1 {
+        margin-bottom: 50px;
+    }
+
+    .carouselItem img {
+        margin: 0;
+        width: 386px;
+        height: 149px;
+    }
+
+    .carouselItem p {
+        margin: 0;
+        margin-top: 50px;
+        font-size: 25px;
+    }
+
+    .carouselItem[style] {
+        padding-top: 0;
+    }
+
+    .slick-dots[style] {
+        margin-top: -270px;
+    }
+
+    .slick-dots img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .price {}
 }
 
 .MyAlert {
@@ -1476,7 +1527,76 @@ hr {
         display: flex;
     }
 
+    .price {
+        width: 85%;
+    }
+
+    .priceRow {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+
     .noneDisplayMobile {
         display: none;
+    }
+
+    .income {
+        height: 1000px;
+    }
+
+    .carouselItem p {
+        font-size: 30px;
+    }
+
+    .priceBlock {
+        padding-top: 10px;
+    }
+
+    .priceRow h2,
+    .priceRow span {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1209px) {
+    .income {
+        height: 1050px;
+    }
+
+    .carouselItem p {
+        font-size: 40px;
+    }
+
+    .priceBlock {
+        padding-top: 10px;
+    }
+
+    .priceRow h2,
+    .priceRow span {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (min-width: 1209px) and (max-width: 1325px) {
+    .income {
+        height: 1100px;
+    }
+
+    .carouselItem p {
+        font-size: 50px;
+    }
+
+    .priceRow h2,
+    .priceRow span {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .priceBlock {
+        padding-top: 20px;
     }
 }
