@@ -117,7 +117,7 @@ function App() {
 				name: formControls.name.value,
 				phone_number: formControls.phone.value,
 			};
-			axios.post('https://149.102.143.18/lead');
+			axios.post('https://149.102.143.18/lead', leadData);
 
 			alert('Ваша заявка успешно отправлена!');
 			setIsFormValid(true);
