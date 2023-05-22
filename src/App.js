@@ -118,7 +118,7 @@ function App() {
 				name: formControls.name.value,
 				phone_number: formControls.phone.value,
 			};
-			fetch(`http://149.102.143.18/lead`, {
+			fetch(`/lead`, {
 				method: 'POST',
 				mode: 'cors',
 				headers: {
@@ -222,7 +222,7 @@ function App() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const response = await axios.get(`http://149.102.143.18/prices`, {
+				const response = await axios.get('/prices', {
 					headers: {
 						'Access-Control-Allow-Origin': '*',
 						Accept: 'application/json',
