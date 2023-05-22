@@ -113,12 +113,11 @@ function App() {
 
 	async function throwLead() {
 		if (phoneValidation() && nameValidation()) {
-			console.log('work');
 			const leadData = {
 				name: formControls.name.value,
 				phone_number: formControls.phone.value,
 			};
-			axios.post('http://149.102.143.18/lead');
+			axios.post('https://149.102.143.18/lead');
 
 			alert('Ваша заявка успешно отправлена!');
 			setIsFormValid(true);
@@ -181,7 +180,6 @@ function App() {
 	function formatPrice(number) {
 		let numberString = number.toString().replace(' ', '');
 
-		console.log('raw ' + numberString);
 		let formattedNumber = '';
 		let count = 0;
 
@@ -200,7 +198,7 @@ function App() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const response = await axios.get('/prices', {
+				const response = await axios.get('https://149.102.143.18/prices', {
 					headers: {
 						'Access-Control-Allow-Origin': '*',
 						Accept: 'application/json',
@@ -215,7 +213,6 @@ function App() {
 					};
 				});
 				setPrice(newPrices);
-				console.log(response.data);
 			} catch (e) {
 				console.log(e);
 			}
