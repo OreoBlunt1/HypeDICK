@@ -118,29 +118,7 @@ function App() {
 				name: formControls.name.value,
 				phone_number: formControls.phone.value,
 			};
-			fetch(`/lead`, {
-				method: 'POST',
-				mode: 'cors',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(leadData),
-			})
-				.then((response) => {
-					if (response.ok) {
-						console.log(response.json());
-						return response;
-					}
-					throw new Error('Error: ' + response.status);
-				})
-				.then((data) => {
-					console.log(data);
-				})
-				.catch((error) => {
-					console.log('Error:', error.message);
-				});
+			axios.post('http://149.102.143.18/lead');
 
 			alert('Ваша заявка успешно отправлена!');
 			setIsFormValid(true);
