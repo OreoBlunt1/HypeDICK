@@ -198,7 +198,15 @@ function App() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const response = await axios.get('https://149.102.143.18/prices');
+				const headers = {
+					'User-Agent':
+						'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+					Accept: 'application/json',
+				};
+
+				const response = await axios.get('https://149.102.143.18/prices', {
+					headers,
+				});
 				const newPrices = response.data.map((price) => {
 					return {
 						pos: price.pos,
