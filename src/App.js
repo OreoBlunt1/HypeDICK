@@ -198,13 +198,7 @@ function App() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const response = await axios.get('https://149.102.143.18/prices', {
-					headers: {
-						'Access-Control-Allow-Origin': '*',
-						Accept: 'application/json',
-						'Content-Type': 'application/json',
-					},
-				});
+				const response = await axios.get('https://149.102.143.18/prices');
 				const newPrices = response.data.map((price) => {
 					return {
 						pos: price.pos,

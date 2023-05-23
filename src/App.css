@@ -1603,13 +1603,17 @@ hr {
         font-size: 40px;
     }
 
+    .priceRow {
+        margin-bottom: 50px;
+    }
+
     .priceBlock {
         padding-top: 10px;
     }
 
     .priceRow h2,
     .priceRow span {
-        font-size: 20px;
+        font-size: 15px;
         margin-bottom: 10px;
     }
 }
@@ -1625,6 +1629,10 @@ hr {
 
     .carouselItem p {
         font-size: 50px;
+    }
+
+    .priceRow {
+        margin-bottom: 50px;
     }
 
     .priceRow h2,
