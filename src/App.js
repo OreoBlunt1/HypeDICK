@@ -14,12 +14,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 import MyAlert from './MyAlert/MyAlert';
+import PhoneInput from './PhoneInput/PhoneInput';
 
 function App() {
 	const [isFirstAccordion, setIsFirstAccordion] = useState(false);
 	const [isSecondAccordion, setIsSecondAccordion] = useState(false);
 	const [isThirdAccordion, setIsThirdAccordion] = useState(false);
 	const [isFourthAccordion, setIsFourthAccordion] = useState(false);
+	const [isChecked, setIsChecked] = useState(false);
 
 	const [isReplyMe, setIsReplyMe] = useState(false);
 
@@ -35,6 +37,10 @@ function App() {
 			value: '',
 		},
 	});
+
+	function handleCheckChange(event) {
+		setIsChecked(event.target.checked);
+	}
 
 	const sliderSettings = {
 		slidesToShow: 1,
@@ -137,13 +143,16 @@ function App() {
 	function onPhoneChangeHandler(event) {
 		const newFormControls = { ...formControls };
 		newFormControls.phone.value = event.target.value;
-		if (
-			newFormControls.phone.value === '8' ||
-			newFormControls.phone.value === '7'
-		) {
-			newFormControls.phone.value = '+7';
-		} else if (newFormControls.phone.value === '9') {
-			newFormControls.phone.value = '+79';
+
+		if (!isChecked) {
+			if (
+				newFormControls.phone.value === '8' ||
+				newFormControls.phone.value === '7'
+			) {
+				newFormControls.phone.value = '+7';
+			} else if (newFormControls.phone.value === '9') {
+				newFormControls.phone.value = '+79';
+			}
 		}
 
 		setFormControls(newFormControls);
@@ -330,16 +339,14 @@ function App() {
 											onKeyDown={onEnterPressedHandler}
 											placeholder='Имя'
 										/>
-										<input
-											pattern='[0-9]*'
-											value={formControls.phone.value}
-											onChange={(event) => {
-												onPhoneChangeHandler(event);
-											}}
-											onKeyDown={onEnterPressedHandler}
-											placeholder='+7 (999) 999 99 99'
+										<PhoneInput
+											isChecked={isChecked}
+											onEnterPressedHandler={onEnterPressedHandler}
+											handleCheckChange={handleCheckChange}
+											phoneValue={formControls.phone.value}
+											onPhoneChangeHandler={onPhoneChangeHandler}
 										/>
-										{!isFormValid && !phoneValidation() ? (
+										{!isFormValid && !phoneValidation() && !isChecked ? (
 											<p>*Проверьте правильность номера телефона</p>
 										) : null}
 										{!isFormValid &&
@@ -355,7 +362,7 @@ function App() {
 										<button onClick={throwLead}>Отправить заявку</button>
 										<span className='noneDisplayMobile'>
 											Нажимая на кнопку, вы принимаете&nbsp;
-											<a href='https://yandex.ru/'>
+											<a href='./blank.pdf' download>
 												условия
 												<br />
 												передачи информации и пользовательское
@@ -901,8 +908,12 @@ function App() {
 								<span>HypeTaxi</span>
 								<span className='r'>®</span>
 							</div>
-							<a>Политика конфеденциальности</a>
-							<a>Пользовательское соглашение</a>
+							<a href='./blank.pdf' download>
+								Политика конфеденциальности
+							</a>
+							<a href='./blank.pdf' download>
+								Пользовательское соглашение
+							</a>
 						</div>
 					</div>
 				</div>

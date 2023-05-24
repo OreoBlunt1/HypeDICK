@@ -1277,6 +1277,11 @@ hr {
     padding-bottom: 51px;
 }
 
+.footerDown a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .timetable span {
     margin-top: -8px;
     font-family: 'Montserrat';
@@ -1509,6 +1514,13 @@ hr {
     z-index: 90;
     transform: translateY(-50%) translateX(-50%);
 }
+
+.MyAlert h1 {
+    font-size: 24px;
+    line-height: normal;
+}
+
+
 
 .panel {
     display: flex;

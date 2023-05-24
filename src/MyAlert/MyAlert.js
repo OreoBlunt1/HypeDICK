@@ -13,6 +13,7 @@ export default function MyAlert({ onClose }) {
 			value: '',
 		},
 	});
+	const [isChecked, setIsChecked] = useState(false);
 
 	const IP = process.env.REACT_APP_IP_ADDRESS;
 
@@ -25,11 +26,15 @@ export default function MyAlert({ onClose }) {
 	}
 
 	function throwLead() {
-		if (phoneValidation() && nameValidation()) {
-			const leadData = {
-				name: formControls.name.value,
-				phone_number: formControls.phone.value,
-			};
+		const leadData = {
+			name: formControls.name.value,
+			phone_number: formControls.phone.value,
+		};
+		if (isChecked && nameValidation()) {
+			axios.post(`${IP}/lead`, leadData);
+			alert('Заявка успешно отправлена! Ожидайте чего-то там');
+			setIsFormValid(true);
+		} else if (phoneValidation() && nameValidation()) {
 			axios.post(`${IP}/lead`, leadData);
 			alert('Заявка успешно отправлена! Ожидайте чего-то там');
 			setIsFormValid(true);
@@ -48,16 +53,23 @@ export default function MyAlert({ onClose }) {
 	function onPhoneChangeHandler(event) {
 		const newFormControls = { ...formControls };
 		newFormControls.phone.value = event.target.value;
-		if (
-			newFormControls.phone.value === '8' ||
-			newFormControls.phone.value === '7'
-		) {
-			newFormControls.phone.value = '+7';
-		} else if (newFormControls.phone.value === '9') {
-			newFormControls.phone.value = '+79';
+
+		if (!isChecked) {
+			if (
+				newFormControls.phone.value === '8' ||
+				newFormControls.phone.value === '7'
+			) {
+				newFormControls.phone.value = '+7';
+			} else if (newFormControls.phone.value === '9') {
+				newFormControls.phone.value = '+79';
+			}
 		}
 
 		setFormControls(newFormControls);
+	}
+
+	function handleCheckChange(event) {
+		setIsChecked(event.target.checked);
 	}
 
 	function onEnterPressedHandler(event) {
@@ -70,9 +82,8 @@ export default function MyAlert({ onClose }) {
 		<>
 			<div className='card MyAlert'>
 				<h1>
-					Стать
-					<br />
-					инвестором
+					Оставьте ваши контакты
+					<br />и мы вам перезвоним!
 				</h1>
 				<input
 					value={formControls.name.value}
@@ -82,15 +93,26 @@ export default function MyAlert({ onClose }) {
 					onKeyDown={onEnterPressedHandler}
 					placeholder='Имя'
 				/>
-				<input
-					value={formControls.phone.value}
-					onChange={(event) => {
-						onPhoneChangeHandler(event);
-					}}
-					onKeyDown={onEnterPressedHandler}
-					placeholder='+7 (999) 999 99 99'
-				/>
-				{!isFormValid && !phoneValidation() ? (
+				<div className='Phone'>
+					<div className='Checkbox'>
+						<input
+							type='checkbox'
+							checked={isChecked}
+							onChange={handleCheckChange}
+						/>
+						<span className='Checkmark'></span>
+					</div>
+					<input
+						className='PhoneInput'
+						value={formControls.phone.value}
+						onChange={(event) => {
+							onPhoneChangeHandler(event);
+						}}
+						onKeyDown={onEnterPressedHandler}
+						placeholder='+7 (999) 999 99 99'
+					/>
+				</div>
+				{!isFormValid && !phoneValidation() && !isChecked ? (
 					<p>*Проверьте правильность номера телефона</p>
 				) : null}
 				{!isFormValid && !nameValidation() ? (
