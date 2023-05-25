@@ -114,10 +114,6 @@ function App() {
 		setIsFourthAccordion((prev) => !prev);
 	}
 
-	function phoneValidation() {
-		return /^(?:\+7|8)\d{10}$/.test(formControls.phone.value);
-	}
-
 	function nameValidation() {
 		return (
 			formControls.name.value !== '' && formControls.name.value.length <= 60
@@ -125,7 +121,7 @@ function App() {
 	}
 
 	async function throwLead() {
-		if (phoneValidation() && nameValidation()) {
+		if (nameValidation()) {
 			const leadData = {
 				name: formControls.name.value,
 				phone_number: formControls.phone.value,
@@ -372,9 +368,6 @@ function App() {
 											phoneValue={formControls.phone.value}
 											onPhoneChangeHandler={onPhoneChangeHandler}
 										/>
-										{!isFormValid && !phoneValidation() && !isChecked ? (
-											<p>*Проверьте правильность номера телефона</p>
-										) : null}
 										{!isFormValid &&
 										!nameValidation() &&
 										formControls.name.value === '' ? (
