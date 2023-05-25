@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../App.css';
 import Backdrop from './BackDrop/BackDrop';
+import PhoneInput from '../PhoneInput/PhoneInput';
 
 export default function MyAlert({ onClose }) {
 	const [isFormValid, setIsFormValid] = useState(true);
+	const [isChecked, setIsChecked] = useState(true);
 	const [formControls, setFormControls] = useState({
 		name: {
 			value: '',
 		},
 		phone: {
-			value: '',
+			value: isChecked ? '+7' : null,
 		},
 	});
-	const [isChecked, setIsChecked] = useState(false);
 
 	const IP = process.env.REACT_APP_IP_ADDRESS;
 
@@ -50,26 +51,52 @@ export default function MyAlert({ onClose }) {
 		setFormControls(newFormControls);
 	}
 
-	function onPhoneChangeHandler(event) {
-		const newFormControls = { ...formControls };
-		newFormControls.phone.value = event.target.value;
-
+	function handleCheckChange(event) {
+		const newFormControls = formControls;
 		if (!isChecked) {
-			if (
-				newFormControls.phone.value === '8' ||
-				newFormControls.phone.value === '7'
-			) {
-				newFormControls.phone.value = '+7';
-			} else if (newFormControls.phone.value === '9') {
-				newFormControls.phone.value = '+79';
-			}
+			newFormControls.phone.value = '+7';
+		} else {
+			newFormControls.phone.value = '';
 		}
-
 		setFormControls(newFormControls);
+		setIsChecked(event.target.checked);
 	}
 
-	function handleCheckChange(event) {
-		setIsChecked(event.target.checked);
+	function formatPhoneNumber(value) {
+		const phoneNumber = value.replace(/\D/g, ''); // Удалить все нецифровые символы
+
+		const phoneNumberLength = phoneNumber.length;
+		let formattedPhoneNumber = '';
+
+		if (phoneNumberLength > 0) {
+			formattedPhoneNumber += '+7 ';
+		}
+		if (phoneNumberLength > 1) {
+			formattedPhoneNumber += `(${phoneNumber.substring(1, 4)}) `;
+		}
+		if (phoneNumberLength > 4) {
+			formattedPhoneNumber += phoneNumber.substring(4, 7);
+		}
+		if (phoneNumberLength > 7) {
+			formattedPhoneNumber += ` ${phoneNumber.substring(7, 9)}`;
+		}
+		if (phoneNumberLength > 9) {
+			formattedPhoneNumber += ` ${phoneNumber.substring(9, 11)}`;
+		}
+
+		return formattedPhoneNumber;
+	}
+
+	function onPhoneChangeHandler(event) {
+		const newFormControls = { ...formControls };
+		const inputValue = event.target.value;
+		const formattedValue = formatPhoneNumber(inputValue);
+		if (inputValue.length > newFormControls.phone.value.length) {
+			newFormControls.phone.value = formattedValue;
+		} else {
+			newFormControls.phone.value = inputValue;
+		}
+		setFormControls(newFormControls);
 	}
 
 	function onEnterPressedHandler(event) {
@@ -93,25 +120,13 @@ export default function MyAlert({ onClose }) {
 					onKeyDown={onEnterPressedHandler}
 					placeholder='Имя'
 				/>
-				<div className='Phone'>
-					<div className='Checkbox'>
-						<input
-							type='checkbox'
-							checked={isChecked}
-							onChange={handleCheckChange}
-						/>
-						<span className='Checkmark'></span>
-					</div>
-					<input
-						className='PhoneInput'
-						value={formControls.phone.value}
-						onChange={(event) => {
-							onPhoneChangeHandler(event);
-						}}
-						onKeyDown={onEnterPressedHandler}
-						placeholder='+7 (999) 999 99 99'
-					/>
-				</div>
+				<PhoneInput
+					isChecked={isChecked}
+					onEnterPressedHandler={onEnterPressedHandler}
+					handleCheckChange={handleCheckChange}
+					phoneValue={formControls.phone.value}
+					onPhoneChangeHandler={onPhoneChangeHandler}
+				/>
 				{!isFormValid && !phoneValidation() && !isChecked ? (
 					<p>*Проверьте правильность номера телефона</p>
 				) : null}

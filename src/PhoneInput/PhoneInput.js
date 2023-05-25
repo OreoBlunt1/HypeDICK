@@ -1,5 +1,5 @@
 import React from 'react';
-import './PhoneInput.css';
+import classes from './PhoneInput.module.css';
 
 export default function PhoneInput({
 	isChecked,
@@ -7,19 +7,26 @@ export default function PhoneInput({
 	phoneValue,
 	onPhoneChangeHandler,
 	onEnterPressedHandler,
+	topMargin,
+	paddingLeft,
 }) {
 	return (
-		<div calss='PhoneInput'>
-			<div className='Checkbox'>
+		<div className={classes.Phone}>
+			<div
+				style={{
+					top: topMargin,
+				}}
+				className={classes.Checkbox}
+			>
 				<input
 					type='checkbox'
 					checked={isChecked}
 					onChange={handleCheckChange}
 				/>
-				<span className='Checkmark'></span>
+				<span className={classes.Checkmark}></span>
 			</div>
 			<input
-				className='PhoneInput'
+				className={classes.PhoneInput}
 				value={phoneValue}
 				onChange={(event) => {
 					onPhoneChangeHandler(event);

@@ -1,0 +1,69 @@
+.Phone {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.PhoneInput {
+    padding-left: 70px !important;
+}
+
+.Checkbox {
+    position: absolute;
+    left: 9%;
+    top: 55%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    width: 20px;
+    height: 20px;
+    background-color: #d9d9d9;
+    /* Adjust the margin as needed */
+}
+
+.Checkbox input {
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-left: 30px;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.Checkbox input:checked::before {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 29%;
+    width: 5px;
+    height: 10px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+@media screen and (min-width: 375px) and (max-width: 1000px) {
+    .Phone {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .Checkbox {
+        top: 37%;
+        left: 3.5%;
+    }
+
+}
+
+@media screen and (min-width: 375px) and (max-width: 550px) {
+    .Checkbox {
+        left: 7%;
+    }
+}

@@ -21,7 +21,7 @@ function App() {
 	const [isSecondAccordion, setIsSecondAccordion] = useState(false);
 	const [isThirdAccordion, setIsThirdAccordion] = useState(false);
 	const [isFourthAccordion, setIsFourthAccordion] = useState(false);
-	const [isChecked, setIsChecked] = useState(false);
+	const [isChecked, setIsChecked] = useState(true);
 
 	const [isReplyMe, setIsReplyMe] = useState(false);
 
@@ -34,11 +34,18 @@ function App() {
 			value: '',
 		},
 		phone: {
-			value: '',
+			value: isChecked ? '+7' : null,
 		},
 	});
 
 	function handleCheckChange(event) {
+		const newFormControls = formControls;
+		if (!isChecked) {
+			newFormControls.phone.value = '+7';
+		} else {
+			newFormControls.phone.value = '';
+		}
+		setFormControls(newFormControls);
 		setIsChecked(event.target.checked);
 	}
 
@@ -140,21 +147,40 @@ function App() {
 		setFormControls(newFormControls);
 	}
 
-	function onPhoneChangeHandler(event) {
-		const newFormControls = { ...formControls };
-		newFormControls.phone.value = event.target.value;
+	function formatPhoneNumber(value) {
+		const phoneNumber = value.replace(/\D/g, ''); // Удалить все нецифровые символы
 
-		if (!isChecked) {
-			if (
-				newFormControls.phone.value === '8' ||
-				newFormControls.phone.value === '7'
-			) {
-				newFormControls.phone.value = '+7';
-			} else if (newFormControls.phone.value === '9') {
-				newFormControls.phone.value = '+79';
-			}
+		const phoneNumberLength = phoneNumber.length;
+		let formattedPhoneNumber = '';
+
+		if (phoneNumberLength > 0) {
+			formattedPhoneNumber += '+7 ';
+		}
+		if (phoneNumberLength > 1) {
+			formattedPhoneNumber += `(${phoneNumber.substring(1, 4)}) `;
+		}
+		if (phoneNumberLength > 4) {
+			formattedPhoneNumber += phoneNumber.substring(4, 7);
+		}
+		if (phoneNumberLength > 7) {
+			formattedPhoneNumber += ` ${phoneNumber.substring(7, 9)}`;
+		}
+		if (phoneNumberLength > 9) {
+			formattedPhoneNumber += ` ${phoneNumber.substring(9, 11)}`;
 		}
 
+		return formattedPhoneNumber;
+	}
+
+	function onPhoneChangeHandler(event) {
+		const newFormControls = { ...formControls };
+		const inputValue = event.target.value;
+		const formattedValue = formatPhoneNumber(inputValue);
+		if (inputValue.length > newFormControls.phone.value.length) {
+			newFormControls.phone.value = formattedValue;
+		} else {
+			newFormControls.phone.value = inputValue;
+		}
 		setFormControls(newFormControls);
 	}
 
@@ -697,14 +723,14 @@ function App() {
 								onKeyDown={onEnterPressedHandler}
 								placeholder='Имя'
 							/>
-							<input
-								pattern='[0-9]*'
-								value={formControls.phone.value}
-								onChange={(event) => {
-									onPhoneChangeHandler(event);
-								}}
-								onKeyDown={onEnterPressedHandler}
-								placeholder='+7 (999) 999-99-99'
+							<PhoneInput
+								isChecked={isChecked}
+								onEnterPressedHandler={onEnterPressedHandler}
+								handleCheckChange={handleCheckChange}
+								phoneValue={formControls.phone.value}
+								onPhoneChangeHandler={onPhoneChangeHandler}
+								topMargin={'50%'}
+								paddingLeft={'3.5%'}
 							/>
 							<button onClick={throwLead}>Начать зарабатывать с такси</button>
 						</div>
@@ -902,7 +928,7 @@ function App() {
 							</div>
 						</div>
 					</div>
-					<div className='container'>
+					<div className='container downFooter'>
 						<div className='footerDown'>
 							<div className='logo'>
 								<span>HypeTaxi</span>
