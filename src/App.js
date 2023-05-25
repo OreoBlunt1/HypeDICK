@@ -120,8 +120,13 @@ function App() {
 		);
 	}
 
+	function phoneValidation(phoneNumber) {
+		const regex = /^\+7 \(\d{3}\) \d{3} \d{2} \d{2}$/;
+		return regex.test(phoneNumber);
+	}
+
 	async function throwLead() {
-		if (nameValidation()) {
+		if (nameValidation() && phoneValidation() && isChecked()) {
 			const leadData = {
 				name: formControls.name.value,
 				phone_number: formControls.phone.value,
@@ -368,6 +373,12 @@ function App() {
 											phoneValue={formControls.phone.value}
 											onPhoneChangeHandler={onPhoneChangeHandler}
 										/>
+										{!isFormValid &&
+										nameValidation() &&
+										!phoneValidation() &&
+										isChecked ? (
+											<p>*Проверьте правильность ввода телефона</p>
+										) : null}
 										{!isFormValid &&
 										!nameValidation() &&
 										formControls.name.value === '' ? (
