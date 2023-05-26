@@ -25,8 +25,6 @@ function App() {
 
 	const [isReplyMe, setIsReplyMe] = useState(false);
 
-	const IP = process.env.REACT_APP_IP_ADDRESS;
-
 	const [price, setPrice] = useState(null);
 	const [isFormValid, setIsFormValid] = useState(true);
 	const [formControls, setFormControls] = useState({
@@ -135,7 +133,15 @@ function App() {
 				name: formControls.name.value,
 				phone_number: formControls.phone.value,
 			};
-			axios.post('https://149.102.143.18/lead', leadData);
+			axios.post('https://149.102.143.18/lead', leadData, {
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Methods': 'POST',
+					'Access-Control-Allow-Headers': 'Content-Type',
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+			});
 
 			alert('Ваша заявка успешно отправлена!');
 			setIsFormValid(true);
@@ -215,7 +221,7 @@ function App() {
 		return () => {
 			document.removeEventListener('keydown', onEscPressedHandler);
 		};
-	}, []);
+	});
 
 	function formatPrice(number) {
 		let numberString = number.toString().replace(' ', '');
@@ -238,7 +244,13 @@ function App() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const response = await axios.get('https://149.102.143.18/prices');
+				const response = await axios.get('https://149.102.143.18/prices', {
+					headers: {
+						'Access-Control-Allow-Origin': '*',
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+					},
+				});
 				const newPrices = response.data.map((price) => {
 					return {
 						pos: price.pos,
@@ -432,7 +444,7 @@ function App() {
 							</Slider>
 							<div className='price'>
 								<div className='priceRow autoAmount noneDisplayMobile'>
-									<h2></h2>
+									<h2>&nbsp;</h2>
 									<span>{price ? price[0].pos : null}</span>
 									<span>{price ? price[1].pos : null}</span>
 									<span>{price ? price[2].pos : null}</span>

@@ -51,12 +51,12 @@ class Admins(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     chat_id = db.Column(db.Integer)
 
-
     def to_dict(self):
         return {
             '_id': self.id,
             'chat_id': self.chat_id
         }
+
 
 app.app_context().push()
 db.create_all()
@@ -67,12 +67,14 @@ db.create_all()
 def new_lead():
     if request.method == 'POST':
         try:
-            lead = Lead(phone_number=request.get_json().get('phone_number'), name=request.get_json().get('name'))
+            lead = Lead(phone_number=request.get_json().get(
+                'phone_number'), name=request.get_json().get('name'))
             db.session.add(lead)
             db.session.commit()
             admins_chatids = [x.chat_id for x in Admins.query]
             for chat_id in admins_chatids:
-                bot.send_message(chat_id, f"Новый заказ!\n\nИмя: {lead.name}\nТелефон: {lead.phone_number}")
+                bot.send_message(
+                    chat_id, f"Новый заказ!\n\nИмя: {lead.name}\nТелефон: {lead.phone_number}")
             return jsonify({"action": "add new lead", "lead_id": lead.id})
 
         except Exception as e:
@@ -85,9 +87,12 @@ def new_lead():
 @app.route('/init', methods=['GET'])
 def init():
     if request.method == 'GET':
-        db.session.add(Prices(pos='1 Авто', rent='36 000', redemption='36 000'))
-        db.session.add(Prices(pos='5 Авто', rent='180 000', redemption='180 000'))
-        db.session.add(Prices(pos='10 Авто', rent='360 000', redemption='360 000'))
+        db.session.add(
+            Prices(pos='1 Авто', rent='36 000', redemption='36 000'))
+        db.session.add(
+            Prices(pos='5 Авто', rent='180 000', redemption='180 000'))
+        db.session.add(
+            Prices(pos='10 Авто', rent='360 000', redemption='360 000'))
         db.session.commit()
         return "Added"
 
@@ -98,13 +103,17 @@ def prices():
     if request.method == 'POST':
         try:
             if Prices.query.filter_by(pos=request.get_json().get("pos")).first():
-                p = Prices.query.filter_by(pos=request.get_json().get("pos")).first()
-                p.rent = request.get_json().get("rent") if request.get_json().get("rent") is not None else p.rent
-                p.redemption = request.get_json().get("redemption") if request.get_json().get("redemption") is not None else p.redemption
+                p = Prices.query.filter_by(
+                    pos=request.get_json().get("pos")).first()
+                p.rent = request.get_json().get("rent") if request.get_json().get(
+                    "rent") is not None else p.rent
+                p.redemption = request.get_json().get("redemption") if request.get_json().get(
+                    "redemption") is not None else p.redemption
                 db.session.commit()
                 return jsonify({"action": "update pos", "position_name": p.pos})
             else:
-                price = Prices(pos=request.get_json().get('pos'), rent=request.get_json().get('rent'),  redemption=request.get_json().get('redemption'))
+                price = Prices(pos=request.get_json().get('pos'), rent=request.get_json().get(
+                    'rent'),  redemption=request.get_json().get('redemption'))
                 db.session.add(price)
                 db.session.commit()
                 return jsonify({"action": "add new pos", "position_name": price.pos})
